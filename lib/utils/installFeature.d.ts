@@ -1,15 +1,15 @@
 /**
  * 安装 ESLint
  */
-export declare function installESLint(): void;
+export declare function installESLint(): Promise<void>;
 /**
  * 安装 Prettier
  */
-export declare function installPrettier(): void;
+export declare function installPrettier(): Promise<void>;
 /**
  * 安装 CZ，规范 git 提交信息
  */
-export declare function installCZ(): void;
+export declare function installCZ(): Promise<void>;
 /**
  * 安装 husky 和 lint-staged，以实现 git commit 时自动化校验
  * @param hooks，需要自动执行的钩子

@@ -1,7 +1,7 @@
 {
   "name": "@wind-wine/goo-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "goo-cli",
   "main": "./lib/index.js",
   "scripts": {
     "dev:comment": "启动开发环境",
@@ -21,9 +21,16 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "files": ["package.json", "README.md", "lib"],
+  "files": [
+    "package.json",
+    "README.md",
+    "lib"
+  ],
   "lint-staged": {
-    "*.ts": ["npm run eslint", "npm run prettier"]
+    "*.ts": [
+      "npm run eslint",
+      "npm run prettier"
+    ]
   },
   "bin": {
     "goo-cli": "./bin/goo-cli.js"
@@ -40,7 +47,7 @@
   },
   "publishConfig": {
     "access": "public"
-},
+  },
   "homepage": "https://github.com/feiyafeiyadou/goo-cli#readme",
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",

@@ -2,7 +2,7 @@
  * 验证当前目录下是否已经存在指定文件，如果存在则退出进行
  * @param filename 文件名
  */
-export declare function isFileExist(filename: string): void;
+export declare function isFileExist(filename: string): Promise<void>;
 /**
  * 交互式命令行，让用户自己选择需要的功能
  * return ['ESLint', 'Prettier', 'CZ']
@@ -37,4 +37,4 @@ export declare function installFeature(feature: Array<string>): void;
 /**
  * 整个项目安装结束，给用户提示信息
  */
-export declare function end(projectName: string): void;
+export declare function end(projectName: string): Promise<void>;

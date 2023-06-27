@@ -4,7 +4,7 @@
 import * as shell from 'shelljs';
 import { writeFileSync } from 'fs';
 import { PackageJSON, readJsonFile, printMsg, writeJsonFile } from './common';
-// import chalk from 'chalk';
+import chalk from 'chalk';
 
 /**
  * 安装 ESLint
@@ -35,7 +35,6 @@ export async function installESLint() {
     }
   };
     `;
-  const chalk = (await import('chalk')).default;
   try {
     writeFileSync('./.eslintrc.js', eslintrc, { encoding: 'utf-8' });
   } catch (err) {
@@ -98,16 +97,7 @@ export async function installPrettier() {
     endOfLine: 'lf'
   };
     `;
-  const chalk = (await import('chalk')).default;
-  try {
-    writeFileSync('./.prettierrc.js', prettierrc, { encoding: 'utf-8' });
-  } catch (err) {
-    printMsg(`${chalk.red('Failed to write .prettierrc.js file content')}`);
-    printMsg(
-      `${chalk.red('Please add the following content in .prettierrc.js')}`,
-    );
-    printMsg(`${chalk.red(prettierrc)}`);
-  }
+  writeFileSync('./.prettierrc.js', prettierrc, { encoding: 'utf-8' });
   // 改写 package.json
   const packageJson = readJsonFile<PackageJSON>('./package.json');
   packageJson.scripts['prettier:comment'] =
@@ -129,20 +119,7 @@ export async function installCZ() {
     extends: ['@commitlint/config-conventional']
   };
     `;
-  const chalk = (await import('chalk')).default;
-  try {
-    writeFileSync('./commitlint.config.js', commitlint, { encoding: 'utf-8' });
-  } catch (err) {
-    printMsg(
-      `${chalk.red('Failed to write commitlint.config.js file content')}`,
-    );
-    printMsg(
-      `${chalk.red(
-        'Please add the following content in commitlint.config.js',
-      )}`,
-    );
-    printMsg(`${chalk.red(commitlint)}`);
-  }
+  writeFileSync('./commitlint.config.js', commitlint, { encoding: 'utf-8' });
   // 改写 package.json
   const packageJson = readJsonFile<PackageJSON>('./package.json');
   packageJson.scripts['commit:comment'] = '引导设置规范化的提交信息';

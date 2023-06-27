@@ -10,9 +10,10 @@ import {
   writeJsonFile,
   clearConsole,
 } from '../utils/common';
+import inquirer from 'inquirer';
+import chalk from 'chalk';
 import { existsSync } from 'fs';
 import * as installFeatureMethod from './installFeature';
-// import chalk from 'chalk';
 import * as shell from 'shelljs';
 
 /**
@@ -24,8 +25,19 @@ export async function isFileExist(filename: string) {
   const file = getProjectPath(filename);
   // 验证文件是否已经存在，存在则推出进程
   if (existsSync(file)) {
-    const chalk = (await import('chalk')).default;
     printMsg(chalk.red(`${file} 已经存在`));
+    const { prompt } = inquirer;
+    const { ifDeleteFile } = await prompt([
+      {
+        name: 'ifDeleteFile',
+        type: 'confirm',
+        message: '是否删除已存在项目',
+      },
+    ]);
+    if (ifDeleteFile) {
+      shell.exec(`rd /Q /S ${file}`);
+      return;
+    }
     process.exit(1);
   }
 }
@@ -39,14 +51,13 @@ export async function selectFeature(): Promise<Array<string>> {
   clearConsole();
   // 输出信息
   /* eslint-disable @typescript-eslint/no-var-requires */
-  const chalk = (await import('chalk')).default;
   printMsg(chalk.blue(`TS CLI v${require('../../package.json').version}`));
   printMsg('Start initializing the project:');
   printMsg('');
   // 选择功能，这里配合 下面的 installFeature 方法 和 ./installFeature.ts 文件为脚手架提供了良好的扩展机制
   // 将来扩展其它功能只需要在 choices 数组中增加配置项，然后在 ./installFeature.ts 文件中增加相应的安装方法即可
 
-  const { prompt } = (await import('inquirer')).default;
+  const { prompt } = inquirer;
   const { feature } = await prompt([
     {
       name: 'feature',
@@ -163,7 +174,7 @@ export function installFeature(feature: Array<string>): void {
  */
 function installHusky(feature: Array<string>): void {
   // feature 副本
-  const featureBak = JSON.parse(JSON.stringify(feature));
+  const featureBak = feature.filter((item) => item);
 
   // 设置 hook
   const hooks = {};
@@ -188,7 +199,6 @@ function installHusky(feature: Array<string>): void {
  * 整个项目安装结束，给用户提示信息
  */
 export async function end(projectName: string) {
-  const chalk = (await import('chalk')).default;
   printMsg(`Successfully created project ${chalk.yellow(projectName)}`);
   printMsg('Get started with the following commands:');
   printMsg('');

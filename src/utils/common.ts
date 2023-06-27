@@ -3,7 +3,7 @@
  */
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import * as clear from 'clear-console';
+import clear from 'clear-console';
 
 export interface PackageJSON {
   name: string;
@@ -26,7 +26,7 @@ export function readJsonFile<T>(filename: string): T {
   return JSON.parse(readFileSync(filename, { encoding: 'utf-8', flag: 'r' }));
 }
 
-/**
+/**a
  * 覆写指定路径下的 json 文件
  * @param filename json 文件的路径
  * @param content  json 内容

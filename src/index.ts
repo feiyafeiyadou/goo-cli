@@ -3,7 +3,7 @@ import create from './order/create';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 program
-  .version(`${require('../package.json').version}`, '-v --version')
+  .version(`${require.resolve('../package.json')}`, '-v --version')
   .usage('<command> [options]');
 
 program
